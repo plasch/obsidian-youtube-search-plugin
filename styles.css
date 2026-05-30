@@ -322,6 +322,46 @@
   }
 }
 
+/* ── Settings: Folder Input ─────────────────────────────────── */
+
+.yt-folder-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 280px;
+  padding: 0 8px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  background: var(--background-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.yt-folder-input-wrapper:focus-within {
+  border-color: var(--interactive-accent);
+  box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+}
+
+.yt-folder-input-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.yt-folder-input-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.yt-folder-input-wrapper input[type="text"] {
+  flex: 1;
+  min-width: 0;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding-left: 0 !important;
+}
+
 /* ── Duplicate Warning ─────────────────────────────────────── */
 
 .youtube-dupe-warning {

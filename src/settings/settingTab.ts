@@ -1,6 +1,7 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import { App, PluginSettingTab, Setting, setIcon } from "obsidian";
 import type YouTubeSearchPlugin from "../main";
 import { DEFAULT_NOTE_TEMPLATE } from "./settings";
+import { FolderSuggest } from "./folderSuggest";
 
 export class YouTubeSearchSettingTab extends PluginSettingTab {
   plugin: YouTubeSearchPlugin;
@@ -22,15 +23,27 @@ export class YouTubeSearchSettingTab extends PluginSettingTab {
     new Setting(containerEl)
       .setName("Note location")
       .setDesc("Folder where new video notes will be saved. Leave empty for vault root.")
-      .addText(text =>
+      .addText(text => {
+        new FolderSuggest(this.app, text.inputEl);
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "yt-folder-input-wrapper";
+        text.inputEl.parentElement!.insertBefore(wrapper, text.inputEl);
+
+        const iconEl = document.createElement("span");
+        iconEl.className = "yt-folder-input-icon";
+        setIcon(iconEl, "search");
+        wrapper.appendChild(iconEl);
+        wrapper.appendChild(text.inputEl);
+
         text
           .setPlaceholder("YouTube")
           .setValue(this.plugin.settings.noteLocation)
           .onChange(async value => {
             this.plugin.settings.noteLocation = value;
             await this.plugin.saveSettings();
-          })
-      );
+          });
+      });
 
     new Setting(containerEl)
       .setName("Filename template")
@@ -108,7 +121,6 @@ export class YouTubeSearchSettingTab extends PluginSettingTab {
           .onChange(async value => {
             this.plugin.settings.includeVideoInfo = value;
             await this.plugin.saveSettings();
-            // setVideoInfoRowsVisible(value);
           })
       );
 
@@ -134,15 +146,27 @@ export class YouTubeSearchSettingTab extends PluginSettingTab {
       new Setting(containerEl)
         .setName("Thumbnail directory")
         .setDesc("Folder where downloaded thumbnails will be saved.")
-        .addText(text =>
+        .addText(text => {
+          new FolderSuggest(this.app, text.inputEl);
+
+          const wrapper = document.createElement("div");
+          wrapper.className = "yt-folder-input-wrapper";
+          text.inputEl.parentElement!.insertBefore(wrapper, text.inputEl);
+
+          const iconEl = document.createElement("span");
+          iconEl.className = "yt-folder-input-icon";
+          setIcon(iconEl, "search");
+          wrapper.appendChild(iconEl);
+          wrapper.appendChild(text.inputEl);
+
           text
             .setPlaceholder("YouTube/thumbnails")
             .setValue(this.plugin.settings.thumbnailDirectory)
             .onChange(async value => {
               this.plugin.settings.thumbnailDirectory = value;
               await this.plugin.saveSettings();
-            })
-        );
+            });
+        });
     }
 
     // ── Custom Template ───────────────────────────────────────────────────

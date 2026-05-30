@@ -13,15 +13,32 @@ export class App {
     createBinary: vi.fn(async () => {}),
     create: vi.fn(async (path: string) => ({ path, basename: path.split('/').pop()?.replace('.md', ''), extension: 'md' })),
     getMarkdownFiles: vi.fn(() => []),
+    getAllLoadedFiles: vi.fn(() => []),
   }
   metadataCache = { getFileCache: vi.fn(() => null) }
   workspace = { getLeaf: vi.fn(() => ({ openFile: vi.fn() })) }
+  keymap = { pushScope: vi.fn(), popScope: vi.fn() }
+  dom = { appContainerEl: null as any }
 }
 
-export class TFile {
+export class TAbstractFile {
   path = ''
+  vault: any = null
+  parent: any = null
+}
+
+export class TFile extends TAbstractFile {
   basename = ''
   extension = 'md'
+}
+
+export class TFolder extends TAbstractFile {
+  children: TAbstractFile[] = []
+  isRoot(): boolean { return this.path === '/' || this.path === '' }
+}
+
+export class Scope {
+  register = vi.fn()
 }
 
 export class Modal {

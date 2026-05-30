@@ -1,0 +1,357 @@
+/* ============================================================
+   YouTube Search Plugin — Modal Styles
+   ============================================================ */
+
+:root {
+  --yt-red: #ff0000;
+  --yt-red-hover: #e93147;
+  --yt-red-dark: #e93147;
+  --color-red: #ff0000;
+}
+
+/* ── Shared Layout ─────────────────────────────────────────── */
+
+.youtube-search-url-modal,
+.youtube-search-preview-modal,
+.youtube-search-loading-modal {
+  padding: 8px 4px 4px;
+}
+
+.youtube-search-url-modal h2,
+.youtube-search-preview-modal h2 {
+  margin-bottom: 4px;
+  font-size: 1.25em;
+}
+
+.youtube-search-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-size: 0.9em;
+}
+
+/* ── URL Input Modal ───────────────────────────────────────── */
+
+.youtube-search-input-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--background-modifier-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--background-primary);
+  transition: border-color 0.2s;
+  margin-bottom: 8px;
+}
+
+.youtube-search-input-container:focus-within {
+  border-color: var(--yt-red);
+  box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.12);
+}
+
+.youtube-search-yt-icon {
+  flex-shrink: 0;
+  color: var(--yt-red);
+  display: flex;
+  align-items: center;
+}
+
+.youtube-search-yt-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.youtube-search-url-input {
+  flex: 1;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 0.95em;
+  padding: 0 !important;
+  color: var(--text-normal);
+}
+
+.youtube-search-url-input.youtube-search-input-error {
+  color: var(--text-error);
+}
+
+.youtube-search-error {
+  color: var(--text-error);
+  font-size: 0.85em;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+.youtube-search-hint {
+  color: var(--text-faint);
+  font-size: 0.78em;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* ── Button Row ────────────────────────────────────────────── */
+
+.youtube-search-button-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.youtube-search-btn-cancel {
+  padding: 6px 16px;
+  border-radius: 6px;
+  background: var(--background-modifier-hover);
+  color: var(--text-normal);
+  border: 1px solid var(--background-modifier-border);
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background 0.15s;
+}
+
+.youtube-search-btn-cancel:hover {
+  background: var(--background-modifier-border);
+}
+
+.youtube-search-btn-submit {
+  padding: 6px 18px;
+  border-radius: 6px;
+  background: var(--yt-red);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 600;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.youtube-search-btn-submit:hover {
+  background: var(--yt-red-hover);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.youtube-search-btn-submit:active {
+  color: #fff;
+  transform: translateY(0);
+}
+
+/* ── Video Preview Card ────────────────────────────────────── */
+
+.youtube-video-card {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 10px;
+  background: var(--background-secondary);
+  margin-bottom: 8px;
+}
+
+.youtube-thumb-container {
+  flex-shrink: 0;
+  position: relative;
+  width: 160px;
+  height: 90px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--background-modifier-border);
+  cursor: pointer;
+}
+
+.youtube-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.youtube-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--yt-red);
+  background: var(--background-modifier-border);
+}
+
+.youtube-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.youtube-thumb-container:hover .youtube-play-overlay {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.youtube-video-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.youtube-video-title {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.35;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.youtube-channel-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+  font-size: 0.82em;
+}
+
+.youtube-channel-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.youtube-channel-name {
+  font-weight: 500;
+}
+
+.youtube-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.youtube-meta-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.78em;
+  color: var(--text-muted);
+  background: var(--background-modifier-hover);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.youtube-url-row {
+  margin-top: auto;
+}
+
+.youtube-url-link {
+  font-size: 0.75em;
+  color: var(--text-accent);
+  text-decoration: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.youtube-url-link:hover {
+  text-decoration: underline;
+}
+
+.youtube-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.youtube-tag {
+  font-size: 0.72em;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: var(--background-modifier-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--background-modifier-border);
+}
+
+.youtube-tag-more {
+  color: var(--text-faint);
+  font-style: italic;
+}
+
+/* ── Loading Modal ─────────────────────────────────────────── */
+
+.youtube-search-loading-modal {
+  text-align: center;
+}
+
+.youtube-loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  gap: 16px;
+}
+
+.youtube-loading-text {
+  color: var(--text-muted);
+  font-size: 0.9em;
+}
+
+.youtube-loading-spinner .youtube-spinner-circle {
+  animation: youtube-spin 1.2s linear infinite;
+  transform-origin: 50px 50px;
+}
+
+@keyframes youtube-spin {
+  from {
+    stroke-dashoffset: 0;
+    transform: rotate(0deg);
+  }
+  to {
+    stroke-dashoffset: 0;
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Duplicate Warning ─────────────────────────────────────── */
+
+.youtube-dupe-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  background: rgba(255, 160, 0, 0.12);
+  border: 1px solid rgba(255, 160, 0, 0.4);
+  font-size: 0.87em;
+  line-height: 1.4;
+  color: var(--text-normal);
+}
+
+.youtube-dupe-icon {
+  flex-shrink: 0;
+  font-size: 1.1em;
+}
+
+
+
+@media (max-width: 480px) {
+  .youtube-video-card {
+    flex-direction: column;
+  }
+
+  .youtube-thumb-container {
+    width: 100%;
+    height: 180px;
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "youtube-search",
+  "name": "YouTube Search",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Search YouTube videos by link and automatically create notes with video metadata.",
+  "author": "plasch",
+  "authorUrl": "https://github.com/plasch/obsidian-youtube-search-plugin",
+  "fundingUrl": "",
+  "isDesktopOnly": false
+}

@@ -1,11 +1,11 @@
 {
   "noteLocation": "YouTube",
   "filenameTemplate": "{{title}}",
-  "noteContentTemplate": "{{viewCount}}\n\n---\n\n![thumbnail]({{thumbnailUrlRemote}})\n\n## {{title}}\n\n▶️ [Watch on YouTube]({{url}})\n\n**Channel:** [{{channelName}}]({{channelUrl}})\n\n## Notes\n\n> _Your notes here_\n",
-  "includeChannel": true,
+  "noteContentTemplate": "",
+  "includeChannel": false,
   "includeThumbnail": true,
   "includeTags": false,
-  "includeVideoInfo": true,
+  "includeVideoInfo": false,
   "saveLocalThumbnail": false,
   "thumbnailDirectory": "YouTube/thumbnails",
   "openNoteAfterCreation": true

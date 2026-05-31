@@ -4,6 +4,7 @@ import type { YouTubeSearchSettings } from '../../settings/settings'
 import {
   sanitizeFilename,
   sanitizeVideoTitle,
+  sanitizeTag,
   renderTemplate,
   generateNoteFrontmatter,
   generateNoteBody,
@@ -124,6 +125,50 @@ describe('sanitizeVideoTitle', () => {
 })
 
 // ---------------------------------------------------------------------------
+// sanitizeTag
+// ---------------------------------------------------------------------------
+
+describe('sanitizeTag', () => {
+  it('replaces spaces with hyphens (kebab-case)', () => {
+    expect(sanitizeTag('rick astley')).toBe('rick-astley')
+    expect(sanitizeTag('never gonna give you up')).toBe('never-gonna-give-you-up')
+    expect(sanitizeTag('two  spaces')).toBe('two-spaces')
+  })
+
+  it('removes characters that are not letters, numbers, underscore, or hyphen', () => {
+    expect(sanitizeTag('tag!')).toBe('tag')
+    expect(sanitizeTag('tag@#$%')).toBe('tag')
+    expect(sanitizeTag('café')).toBe('caf')
+    expect(sanitizeTag('C++')).toBe('C')
+    expect(sanitizeTag('hello.world')).toBe('helloworld')
+  })
+
+  it('preserves letters, numbers, underscores, and hyphens', () => {
+    expect(sanitizeTag('valid-tag')).toBe('valid-tag')
+    expect(sanitizeTag('tag_name')).toBe('tag_name')
+    expect(sanitizeTag('tag123')).toBe('tag123')
+    expect(sanitizeTag('MixedCase')).toBe('MixedCase')
+  })
+
+  it('returns null for purely numerical tags', () => {
+    expect(sanitizeTag('1984')).toBeNull()
+    expect(sanitizeTag('007')).toBeNull()
+    expect(sanitizeTag('42')).toBeNull()
+  })
+
+  it('allows tags that mix numbers with letters', () => {
+    expect(sanitizeTag('y1984')).toBe('y1984')
+    expect(sanitizeTag('1984abc')).toBe('1984abc')
+  })
+
+  it('returns null for tags that become empty after sanitization', () => {
+    expect(sanitizeTag('!!!')).toBeNull()
+    expect(sanitizeTag('')).toBeNull()
+    expect(sanitizeTag('...')).toBeNull()
+  })
+})
+
+// ---------------------------------------------------------------------------
 // renderTemplate
 // ---------------------------------------------------------------------------
 
@@ -161,9 +206,9 @@ describe('renderTemplate', () => {
     expect(result).toBe(video.thumbnailUrl)
   })
 
-  it('formats tags as quoted, comma-separated list', () => {
+  it('formats tags as quoted, comma-separated, kebab-case list', () => {
     const result = renderTemplate('{{tags}}', video)
-    expect(result).toBe('"rick astley", "never gonna give you up", "pop"')
+    expect(result).toBe('"rick-astley", "never-gonna-give-you-up", "pop"')
   })
 
   it('renders empty string for {{tags}} when tags array is empty', () => {
@@ -258,7 +303,8 @@ describe('generateNoteFrontmatter', () => {
   it('includes tags when includeTags is true and tags exist', () => {
     const fm = generateNoteFrontmatter(video, allOnSettings)
     expect(fm).toContain('tags:')
-    expect(fm).toContain('  - "rick astley"')
+    expect(fm).toContain('  - "rick-astley"')
+    expect(fm).toContain('  - "never-gonna-give-you-up"')
     expect(fm).toContain('  - "pop"')
   })
 

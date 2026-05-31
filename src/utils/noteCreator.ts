@@ -22,6 +22,21 @@ export function sanitizeFilename(name: string): string {
 }
 
 /**
+ * Sanitizes a single tag to conform to Obsidian tag rules:
+ * - Only letters, numbers, underscore, hyphen allowed
+ * - Spaces replaced with hyphens (kebab-case)
+ * - Must contain at least one non-numerical character
+ * Returns null if the tag is invalid after sanitization.
+ */
+export function sanitizeTag(tag: string): string | null {
+  const sanitized = tag
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9_-]/g, "");
+  if (!sanitized || /^[0-9]+$/.test(sanitized)) return null;
+  return sanitized;
+}
+
+/**
  * Sanitizes a video title for use in filenames and frontmatter.
  * Strips Obsidian-illegal characters that commonly appear in YouTube titles.
  */
@@ -54,7 +69,7 @@ export function renderTemplate(template: string, videoData: YouTubeVideoData, lo
     "{{publishedAt}}": videoData.publishedAt,
     "{{viewCount}}": videoData.viewCount,
     "{{likeCount}}": videoData.likeCount,
-    "{{tags}}": videoData.tags.length > 0 ? videoData.tags.map(t => `"${t}"`).join(", ") : "",
+    "{{tags}}": videoData.tags.map((t: string) => sanitizeTag(t)).filter((t: string | null): t is string => t !== null).map((t: string) => `"${t}"`).join(", "),
     "{{date}}": new Date().toISOString().split("T")[0],
     "{{time}}": new Date().toTimeString().split(" ")[0],
   };
@@ -102,9 +117,15 @@ export function generateNoteFrontmatter(videoData: YouTubeVideoData, settings: Y
   }
 
   if (settings.includeTags && videoData.tags.length > 0) {
-    lines.push(`tags:`);
-    for (const tag of videoData.tags.slice(0, 10)) {
-      lines.push(`  - "${escapeFrontmatterValue(tag)}"`);
+    const sanitizedTags = videoData.tags
+      .map((t: string) => sanitizeTag(t))
+      .filter((t: string | null): t is string => t !== null)
+      .slice(0, 10);
+    if (sanitizedTags.length > 0) {
+      lines.push(`tags:`);
+      for (const tag of sanitizedTags) {
+        lines.push(`  - "${tag}"`);
+      }
     }
   }
 

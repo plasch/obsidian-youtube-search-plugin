@@ -175,7 +175,7 @@ export class YouTubeSearchSettingTab extends PluginSettingTab {
     const templateSetting = new Setting(containerEl)
       .setName("Note content template")
       .setDesc(
-        "Override the entire note content. Leave empty for the default format. " +
+        "Template for the note body (frontmatter is always auto-generated above). Clear to create notes with frontmatter only. " +
         "Variables: {{title}}, {{videoId}}, {{url}}, {{embedUrl}}, {{channelName}}, {{channelUrl}}, " +
         "{{channelId}}, {{thumbnailUrl}}, {{thumbnailUrlRemote}}, {{description}}, {{publishedAt}}, " +
         "{{viewCount}}, {{tags}}, {{date}}, {{time}}."
@@ -184,7 +184,7 @@ export class YouTubeSearchSettingTab extends PluginSettingTab {
     // Place the textarea directly under the setting-item-info block (below name + desc),
     // spanning the full width of the setting element instead of sitting in the control column.
     const textArea = document.createElement("textarea");
-    textArea.placeholder = "Leave empty to use the default format…";
+    textArea.placeholder = "No template — notes will be created without one.";
     textArea.value = this.plugin.settings.noteContentTemplate;
     textArea.rows = 16;
     textArea.style.width = "100%";
@@ -205,7 +205,7 @@ export class YouTubeSearchSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Reset to default template")
-      .setDesc("Load the default template into the field above so you can customise from it.")
+      .setDesc("Restore the default template.")
       .addButton(btn =>
         btn
           .setButtonText("Load default template")

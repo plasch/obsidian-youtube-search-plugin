@@ -114,7 +114,7 @@ export abstract class TextInputSuggest<T> implements ISuggestOwner<T> {
     this.scope.register([], 'Escape', this.close.bind(this));
 
     this.inputEl.addEventListener('input', this.onInputChanged.bind(this));
-    this.inputEl.addEventListener('focus', this.onInputChanged.bind(this));
+    this.inputEl.addEventListener('click', this.onInputChanged.bind(this));
     this.inputEl.addEventListener('blur', this.close.bind(this));
     this.suggestEl.on('mousedown', '.suggestion-container', (event: MouseEvent) => {
       event.preventDefault();

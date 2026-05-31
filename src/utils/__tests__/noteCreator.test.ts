@@ -385,19 +385,37 @@ describe('generateNoteBody', () => {
 // ---------------------------------------------------------------------------
 
 describe('generateNoteContent', () => {
-  it('combines frontmatter and body separated by a blank line', () => {
+  it('returns only frontmatter when template is empty', () => {
     const content = generateNoteContent({ videoData: video, settings: allOnSettings })
 
     expect(content).toMatch(/^---\n/)
-    expect(content).toContain('---\n\n')
-    expect(content).toContain('## Notes')
+    expect(content).toMatch(/---$/)
+    expect(content).not.toContain('## Notes')
   })
 
-  it('passes localThumbnailPath to both frontmatter and body', () => {
+  it('returns frontmatter + rendered template body when template is set', () => {
+    const settings = { ...allOnSettings, noteContentTemplate: '# {{title}}\n{{url}}' }
+    const content = generateNoteContent({ videoData: video, settings })
+
+    expect(content).toMatch(/^---\n/)
+    expect(content).toContain(`# ${video.title}`)
+    expect(content).toContain(video.url)
+  })
+
+  it('passes localThumbnailPath to frontmatter when template is empty', () => {
     const localPath = 'YouTube/thumbnails/dQw4w9WgXcQ.jpg'
     const content = generateNoteContent({ videoData: video, settings: allOnSettings, localThumbnailPath: localPath })
 
     expect(content).toContain(`thumbnailUrl: "[[${localPath}]]"`)
-    expect(content).toContain(`![[${localPath}]]`)
+    expect(content).not.toContain(`![[${localPath}]]`)
+  })
+
+  it('passes localThumbnailPath to both frontmatter and template body when template is set', () => {
+    const localPath = 'YouTube/thumbnails/dQw4w9WgXcQ.jpg'
+    const settings = { ...allOnSettings, noteContentTemplate: '![[{{thumbnailUrl}}]]' }
+    const content = generateNoteContent({ videoData: video, settings, localThumbnailPath: localPath })
+
+    expect(content).toContain(`thumbnailUrl: "[[${localPath}]]"`)
+    expect(content).toContain(`![[[[${localPath}]]]]`)
   })
 })

@@ -161,12 +161,19 @@ export function generateNoteBody(videoData: YouTubeVideoData, settings: YouTubeS
 }
 
 /**
- * Generates complete note content (frontmatter + body).
+ * Generates complete note content (frontmatter always present).
+ * - Template set: frontmatter + rendered template as body.
+ * - Template empty: frontmatter only, no body.
  */
 export function generateNoteContent(options: NoteCreationOptions): string {
   const { videoData, settings, localThumbnailPath } = options;
   const frontmatter = generateNoteFrontmatter(videoData, settings, localThumbnailPath);
-  const body = generateNoteBody(videoData, settings, localThumbnailPath);
+
+  if (!settings.noteContentTemplate) {
+    return frontmatter;
+  }
+
+  const body = renderTemplate(settings.noteContentTemplate, videoData, localThumbnailPath);
   return `${frontmatter}\n\n${body}`;
 }
 

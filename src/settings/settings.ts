@@ -18,35 +18,7 @@ export interface YouTubeSearchSettings {
   openNoteAfterCreation: boolean;
 }
 
-export const DEFAULT_SETTINGS: YouTubeSearchSettings = {
-  noteLocation: "YouTube",
-  filenameTemplate: "{{title}}",
-  noteContentTemplate: "",
-
-  includeChannel: false,
-  includeThumbnail: true,
-  includeTags: false,
-  includeVideoInfo: false,
-
-  saveLocalThumbnail: false,
-  thumbnailDirectory: "YouTube/thumbnails",
-
-  openNoteAfterCreation: true,
-};
-
-export const DEFAULT_NOTE_TEMPLATE = `---
-title: "{{title}}"
-url: "{{url}}"
-videoId: "{{videoId}}"
-channelName: "{{channelName}}"
-channelUrl: "{{channelUrl}}"
-thumbnailUrl: "{{thumbnailUrl}}"
-publishedAt: "{{publishedAt}}"
-viewCount: "{{viewCount}}"
-dateAdded: "{{date}}"
----
-
-![thumbnail]({{thumbnailUrlRemote}})
+export const DEFAULT_NOTE_TEMPLATE = `![thumbnail]({{thumbnailUrlRemote}})
 
 ## {{title}}
 
@@ -58,3 +30,19 @@ dateAdded: "{{date}}"
 
 > _Your notes here_
 `;
+
+export const DEFAULT_SETTINGS: YouTubeSearchSettings = {
+  noteLocation: "YouTube",
+  filenameTemplate: "{{title}}",
+  noteContentTemplate: DEFAULT_NOTE_TEMPLATE,
+
+  includeChannel: false,
+  includeThumbnail: true,
+  includeTags: false,
+  includeVideoInfo: false,
+
+  saveLocalThumbnail: false,
+  thumbnailDirectory: "YouTube/thumbnails",
+
+  openNoteAfterCreation: true,
+};

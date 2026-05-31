@@ -1,7 +1,7 @@
 {
   "id": "youtube-search",
   "name": "YouTube Search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minAppVersion": "0.15.0",
   "description": "Search YouTube videos by link and automatically create notes with video metadata.",
   "author": "plasch",
